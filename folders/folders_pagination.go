@@ -24,6 +24,15 @@ If there are no more items left (the extra read is null) OR we read < paginated 
 Potential Extensions: reverse pagination, where we specify a boolean if we want to read the next x folders from a cursor or the previous x folders from a cursor
 */
 
+// Short Explanation of Solution
+/*
+GetPaginatedtFolders() takes in a FetchFolderRequest pointer and a string cursor representing where we want to start reading data
+We use FetchFoldersByOrgID() to find valid pages to include in the curent offset.
+The function will start append to our result if we have found the start of the cursor to read data (finding match of Folder.Id)
+It will continue appending results till we either run out of data to read given a page or we reached the page limit
+We return the Folder.Id of the next folder we will start reading from, error and the slice of folders we currently read
+*/
+
 // Copy over the `GetFolders` and `FetchAllFoldersByOrgID` to get started
 func GetPaginatedtFolders(req *FetchFolderRequest, cursor string) (*PaginatedFetchFolderResponse, error) {
 	if (req == nil || req.OrgID == uuid.Nil) {
