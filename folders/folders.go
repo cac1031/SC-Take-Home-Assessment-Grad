@@ -19,7 +19,8 @@ Fixes and Improvements:
   }
 	&v1 will always be referring to the same memory address.
 	To fix this, one way is we can use variable shadowing where we redeclare that copy variable.
-3. I noticed that there were 2 for loops doing similar things of copying the return from FetchAllFoldersByOrgID() so I decided to simplify it by returning the result since FetchAllFoldersByOrgID() already formats it in the data type needed to be returned by GetAllFolders()
+	We can also fix it by doing the point below
+3. I noticed that there were 2 `for loops doing` similar things of copying the return from FetchAllFoldersByOrgID() so I decided to simplify it by returning the result since FetchAllFoldersByOrgID() already formats it in the data type needed to be returned by GetAllFolders()
 
 4. The error return parameter was not being utilized. I decided to use it by checking for invalid parameters (null) being passed (I modified getSampleData() to check for errors)
 */

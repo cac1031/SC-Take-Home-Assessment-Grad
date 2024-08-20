@@ -1,6 +1,7 @@
 package folders_test
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/georgechieng-sc/interns-2022/folders"
@@ -30,10 +31,10 @@ func Test_GetAllFolders(t *testing.T) {
 
 	t.Run("Non Existent OrgID passed to FetchFolderRequest", func(t *testing.T) {
 		req := &folders.FetchFolderRequest{
-			OrgID: uuid.FromStringOrNil("83064af3-bb81-4514-a6d4-afba340825cd"),	// non existent UUID in json file
+			OrgID: uuid.FromStringOrNil("83064af3-bb81-4514-a6d4-afba340825cd"),	// non existent UUID in the provided sample.json file
 		}
 		res, err := folders.GetAllFolders(req)
-		assert.Nil(t, res.Folders)
+		assert.Empty(t, res.Folders)
 		assert.Nil(t, err)
 	})
 
@@ -67,8 +68,9 @@ func Test_GetAllFolders(t *testing.T) {
 			},
 		}
 
-		for _, tt := range tests {
-			t.Run("Test Case", func(t *testing.T) {
+		for i, tt := range tests {
+			testname := fmt.Sprintf("Valid FetchFolderRequest Test %d", i)
+			t.Run(testname, func(t *testing.T) {
 				res, err := folders.GetAllFolders(tt.in)
 				assert.Equal(t, tt.out, res)
 				assert.Nil(t, err)
