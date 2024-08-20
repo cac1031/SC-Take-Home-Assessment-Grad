@@ -8,25 +8,11 @@ import (
 
 const DEFAULT_FETCH = 5 // change this according to page size option
 
-// High Level Ideas
-/*
-payload will be the org_id uuid + token (cursor) string
-if cursor is empty string, we return first x pages, where x is the number of things to return 
-
-since each folder has a unique id, we can use it as the cursor to see where to start next
-
-need to check for invalid/non existent cursors
-
-we will return the cursor to the next item we want to read.
-
-If there are no more items left (the extra read is null) OR we read < paginated items, we return a empty string as token
-
-Potential Extensions: reverse pagination, where we specify a boolean if we want to read the next x folders from a cursor or the previous x folders from a cursor
-*/
 
 // Short Explanation of Solution
 /*
-GetPaginatedtFolders() takes in a FetchFolderRequest pointer and a string cursor representing where we want to start reading data
+Note: We can use the unique Folder.Id as a token
+GetPaginatedtFolders() takes in a FetchFolderRequest pointer and a string cursor
 We use FetchFoldersByOrgID() to find valid pages to include in the curent offset.
 The function will start append to our result if we have found the start of the cursor to read data (finding match of Folder.Id)
 It will continue appending results till we either run out of data to read given a page or we reached the page limit
